@@ -98,11 +98,19 @@
 </template>
 
 <script setup>
+// import { ref, onMounted, onUnmounted, computed } from 'vue'
+// import { Location, TrendCharts, Monitor, Connection, Share, ChatDotRound, UserFilled } from '@element-plus/icons-vue'
+
+// // ---------- 自定义 Logo 图片路径 ----------
+// const logoUrl = ref('src\\assets\\logo\\logoblack.png') 
+
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { Location, TrendCharts, Monitor, Connection, Share, ChatDotRound, UserFilled } from '@element-plus/icons-vue'
 
-// ---------- 自定义 Logo 图片路径 ----------
-const logoUrl = ref('src\\assets\\logo\\logoblack.png')  // 👈 请替换为你自己的图片路径
+// ---------- 自定义 Logo 图片路径（使用 import 导入，确保打包时被处理）----------
+import logoImage from '@/assets/logo/logoblack.png'   // 若 @ 别名不可用，请改为相对路径，如 '../../assets/logo/logoblack.png'
+const logoUrl = ref(logoImage)
+
 
 // ---------- 日期时间逻辑 ----------
 const currentDate = ref('')
