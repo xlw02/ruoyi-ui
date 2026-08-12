@@ -163,7 +163,19 @@ export const dynamicRoutes = [
         meta: { title: '修改生成配置', activeMenu: '/tool/gen' }
       }
     ]
-  }
+  },
+  {
+  path: '/share',
+  component: Layout,
+  children: [
+    {
+      path: '',
+      component: () => import('@/views/shareFile/index.vue'),
+      name: 'ShareFile',
+      meta: { title: '共享文件', icon: 'folder' }
+    }
+  ]
+}
 ]
 
 const router = createRouter({
