@@ -187,9 +187,14 @@ const weatherCodeMap = {
   95: { desc: '雷暴', icon: '⛈️' }
 }
 
+let weatherTimer = null
+
 const fetchWeather = async () => {
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), 5000)
   try {
-    const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=30.49&longitude=119.41&current_weather=true&timezone=Asia/Shanghai')
+    const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=30.49&longitude=119.41&current_weather=true&timezone=Asia/Shanghai', { signal: controller.signal })
+    clearTimeout(timeoutId)
     const data = await res.json()
     if (data?.current_weather) {
       const code = data.current_weather.weathercode
@@ -200,6 +205,7 @@ const fetchWeather = async () => {
       }
     } else throw new Error()
   } catch {
+    clearTimeout(timeoutId)
     weatherData.value = { temperature: '--', description: '获取失败', icon: '🌐', location: '网络受限' }
   }
 }
@@ -221,10 +227,13 @@ onMounted(() => {
   updateDateTime()
   timer = setInterval(updateDateTime, 1000)
   fetchWeather()
-  setInterval(fetchWeather, 30 * 60 * 1000)
+  weatherTimer = setInterval(fetchWeather, 30 * 60 * 1000)
 })
 
-onUnmounted(() => clearInterval(timer))
+onUnmounted(() => {
+  clearInterval(timer)
+  clearInterval(weatherTimer)
+})
 </script>
 
 <style lang="scss" scoped>

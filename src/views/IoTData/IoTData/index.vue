@@ -286,7 +286,7 @@ function handleUpdate(row) {
     title.value = "修改IoT点位数据采集记录"
   })
 }
-
+ 
 /** 提交 */
 function submitForm() {
   proxy.$refs["IoTDataRef"].validate(valid => {

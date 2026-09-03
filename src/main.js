@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, defineAsyncComponent } from 'vue'
 
 import Cookies from 'js-cookie'
 
@@ -29,20 +29,18 @@ import { useDict } from '@/utils/dict'
 import { getConfigKey } from "@/api/system/config"
 import { parseTime, resetForm, addDateRange, handleTree, selectDictLabel, selectDictLabels } from '@/utils/ruoyi'
 
-// 分页组件
+// 分页组件（轻量，保持同步导入）
 import Pagination from '@/components/Pagination'
-// 自定义表格工具组件
+// 自定义表格工具组件（轻量，保持同步导入）
 import RightToolbar from '@/components/RightToolbar'
-// 富文本组件
-import Editor from "@/components/Editor"
-// 文件上传组件
-import FileUpload from "@/components/FileUpload"
-// 图片上传组件
-import ImageUpload from "@/components/ImageUpload"
-// 图片预览组件
-import ImagePreview from "@/components/ImagePreview"
-// 字典标签组件
+// 字典标签组件（轻量，保持同步导入）
 import DictTag from '@/components/DictTag'
+
+// ===== 重型组件改为异步按需加载，避免首屏卡顿 =====
+const Editor = defineAsyncComponent(() => import('@/components/Editor'))
+const FileUpload = defineAsyncComponent(() => import('@/components/FileUpload'))
+const ImageUpload = defineAsyncComponent(() => import('@/components/ImageUpload'))
+const ImagePreview = defineAsyncComponent(() => import('@/components/ImagePreview'))
 
 const app = createApp(App)
 

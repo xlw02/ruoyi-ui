@@ -52,7 +52,8 @@ router.beforeEach(async (to, from) => {
           }
         })
         // 重新导航到目标路由，确保动态路由已注册
-        return { ...to, replace: true }
+        // 只返回路径，让 Vue Router 用更新后的 matcher 重新解析，避免使用旧的 matched 信息
+        return { path: to.fullPath, replace: true }
       } catch (err) {
         await useUserStore().logOut()
         ElMessage.error(err)
